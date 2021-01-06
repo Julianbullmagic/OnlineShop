@@ -4,6 +4,10 @@
   "version": "1.0.0",
   "description": "Ecommerce website like amazon",
   "main": "index.js",
+  "engine":{
+    "node":"12.19.0",
+    "npm":"6.14.8"
+  },
   "scripts": {
     "build": "cd frontend && npm install && npm run build",
     "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js",
