@@ -68,23 +68,23 @@ function App() {
           <div>
             <Route
               render={({ history }) => (
-                <SearchBox history={history}></SearchBox>
+                <SearchBox className="nav" history={history}></SearchBox>
               )}
             ></Route>
           </div>
           <div>
-            <Link to="/cart">
+            <Link to="/cart" className="nav">
               Cart
               {cartItems.length > 0 && (
                 <span className="badge">{cartItems.length}</span>
               )}
             </Link>
             {userInfo ? (
-              <div className="dropdown">
-                <Link to="#">
+              <div className="dropdown nav">
+                <Link to="#" >
                   {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
                 </Link>
-                <ul className="dropdown-content">
+                <ul className="dropdown-content nav">
                   <li>
                     <Link to="/profile">User Profile</Link>
                   </li>
@@ -99,10 +99,10 @@ function App() {
                 </ul>
               </div>
             ) : (
-              <Link to="/signin">Sign In</Link>
+              <Link to="/signin" className="nav">Sign In</Link>
             )}
             {userInfo && userInfo.isSeller && (
-              <div className="dropdown">
+              <div className="dropdown nav">
                 <Link to="#admin">
                   Seller <i className="fa fa-caret-down"></i>
                 </Link>
@@ -118,7 +118,7 @@ function App() {
             )}
             {userInfo && userInfo.isAdmin && (
               <div className="dropdown">
-                <Link to="#admin">
+                <Link to="#admin" className="nav">
                   Admin <i className="fa fa-caret-down"></i>
                 </Link>
                 <ul className="dropdown-content">
@@ -201,7 +201,7 @@ function App() {
             exact
           ></Route>
           <Route
-            path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"
+            path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/condition/:condition/order/:order/pageNumber/:pageNumber"
             component={SearchScreen}
             exact
           ></Route>

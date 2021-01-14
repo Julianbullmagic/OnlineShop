@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { listOrderMine } from '../actions/orderActions';
+import { addToCart} from '../actions/cartActions';
+
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 
@@ -8,9 +10,13 @@ export default function OrderHistoryScreen(props) {
   const orderMineList = useSelector((state) => state.orderMineList);
   const { loading, error, orders } = orderMineList;
   const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+
   useEffect(() => {
     dispatch(listOrderMine());
   }, [dispatch]);
+  console.log("orders")
+  console.log(orders)
   return (
     <div>
       <h1>Order History</h1>
@@ -51,6 +57,23 @@ export default function OrderHistoryScreen(props) {
                     }}
                   >
                     Details
+                  </button>
+                  <button
+                    type="button"
+                    className="small"
+                    onClick={() => {
+
+                      function reAddToCart(item){
+
+                        dispatch(addToCart(item.product, item.qty));
+                        props.history.push(`/cart`);
+
+                      }
+                      order.orderItems.forEach(reAddToCart)
+
+                    }}
+                  >
+                    Reorder
                   </button>
                 </td>
               </tr>

@@ -16,6 +16,9 @@ productRouter.get(
     const category = req.query.category || '';
     const seller = req.query.seller || '';
     const order = req.query.order || '';
+    const condition=req.query.condition||'';
+    console.log("condition in router")
+    console.log(condition)
     const min =
       req.query.min && Number(req.query.min) !== 0 ? Number(req.query.min) : 0;
     const max =
@@ -28,6 +31,8 @@ productRouter.get(
     const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
     const sellerFilter = seller ? { seller } : {};
     const categoryFilter = category ? { category } : {};
+    const conditionFilter = condition ? { condition } : {};
+
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
     const ratingFilter = rating ? { rating: { $gte: rating } } : {};
     const sortOrder =
@@ -44,6 +49,7 @@ productRouter.get(
       ...categoryFilter,
       ...priceFilter,
       ...ratingFilter,
+      ...conditionFilter,
     });
     const products = await Product.find({
       ...sellerFilter,
@@ -51,12 +57,15 @@ productRouter.get(
       ...categoryFilter,
       ...priceFilter,
       ...ratingFilter,
+      ...conditionFilter,
     })
       .populate('seller', 'seller.name seller.logo')
       .sort(sortOrder)
       .skip(pageSize * (page - 1))
       .limit(pageSize);
     res.send({ products, page, pages: Math.ceil(count / pageSize) });
+    console.log("products")
+    console.log(products)
   })
 );
 
@@ -91,10 +100,12 @@ productRouter.get(
 productRouter.get(
   '/:id',
   expressAsyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id).populate(
+
+    var product = await Product.findById(req.params.id).populate(
       'seller',
       'seller.name seller.logo seller.rating seller.numReviews'
     );
+
     if (product) {
       res.send(product);
     } else {
@@ -115,6 +126,7 @@ productRouter.post(
       price: 0,
       category: 'sample category',
       brand: 'sample brand',
+      condition:'new',
       countInStock: 0,
       rating: 0,
       numReviews: 0,

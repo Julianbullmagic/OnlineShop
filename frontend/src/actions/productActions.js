@@ -32,15 +32,19 @@ export const listProducts = ({
   min = 0,
   max = 0,
   rating = 0,
+  condition='',
 }) => async (dispatch) => {
   dispatch({
     type: PRODUCT_LIST_REQUEST,
   });
   try {
     const { data } = await Axios.get(
-      `/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
+      `/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&condition=${condition}&order=${order}`
     );
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+    console.log("axios data")
+    console.log(`/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&condition=${condition}&order=${order}`)
+    console.log(data)
   } catch (error) {
     dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
   }

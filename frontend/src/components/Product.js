@@ -23,6 +23,7 @@ export default function Product(props) {
         ></Rating>
         <div className="row">
           <div className="price">${product.price}</div>
+          <div>{product.condition}</div>
           <div>
 
             {productseller}

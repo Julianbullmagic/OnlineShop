@@ -14,6 +14,7 @@ export default function ProductEditScreen(props) {
   const [category, setCategory] = useState('');
   const [countInStock, setCountInStock] = useState('');
   const [brand, setBrand] = useState('');
+  const [condition, setCondition] = useState('');
   const [description, setDescription] = useState('');
 
   const productDetails = useSelector((state) => state.productDetails);
@@ -38,6 +39,7 @@ export default function ProductEditScreen(props) {
       setName(product.name);
       setPrice(product.price);
       setImage(product.image);
+      setCondition(product.condition);
       setCategory(product.category);
       setCountInStock(product.countInStock);
       setBrand(product.brand);
@@ -55,6 +57,7 @@ export default function ProductEditScreen(props) {
         image,
         category,
         brand,
+        condition,
         countInStock,
         description,
       })
@@ -118,6 +121,20 @@ export default function ProductEditScreen(props) {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               ></input>
+            </div>
+            <div>
+            <label htmlFor="price">Condition</label>
+            <select
+              value={condition}
+              onChange={(e) => {
+              setCondition(e.target.value)
+              }}
+            >
+              <option value="new">new</option>
+              <option value="good as new">good as new</option>
+              <option value="second hand">second hand</option>
+              <option value="scrap">scrap</option>
+            </select>
             </div>
             <div>
               <label htmlFor="image">Image</label>

@@ -15,6 +15,7 @@ export default function SearchScreen(props) {
     min = 0,
     max = 0,
     rating = 0,
+    condition='all',
     order = 'newest',
     pageNumber = 1,
   } = useParams();
@@ -37,20 +38,22 @@ export default function SearchScreen(props) {
         min,
         max,
         rating,
+        condition:condition !== 'all' ? condition : '',
         order,
       })
     );
-  }, [category, dispatch, max, min, name, order, rating, pageNumber]);
+  }, [category, dispatch, max, min, name, order, rating,condition, pageNumber]);
 
   const getFilterUrl = (filter) => {
     const filterPage = filter.page || pageNumber;
     const filterCategory = filter.category || category;
     const filterName = filter.name || name;
     const filterRating = filter.rating || rating;
+    const filterCondition = filter.condition || condition;
     const sortOrder = filter.order || order;
     const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
     const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
-    return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`;
+    return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/condition/${filterCondition}/order/${sortOrder}/pageNumber/${filterPage}`;
   };
   return (
     <div>
@@ -123,6 +126,37 @@ export default function SearchScreen(props) {
                   </Link>
                 </li>
               ))}
+            </ul>
+          </div>
+          <div>
+            <h3>Condition</h3>
+            <ul>
+          <li>
+              <Link
+                to={getFilterUrl({ condition:"new" })}
+              >
+                New
+              </Link></li>
+              <li>
+                  <Link
+                    to={getFilterUrl({ condition:"good as new" })}
+                  >
+                    Good as New
+                  </Link></li>
+                  <li>
+                      <Link
+                        to={getFilterUrl({ condition:"second hand" })}
+                      >
+                        Second Hand/used
+                      </Link></li>
+
+                      <li >
+                          <Link
+                            to={getFilterUrl({ condition:"scrap" })}
+                          >
+                            Really worn out but good for recycling spare parts or materials
+                          </Link></li>
+
             </ul>
           </div>
           <div>
